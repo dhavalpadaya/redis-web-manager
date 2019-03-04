@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redis Web Manager</title>
+<link rel="shortcut icon" type="image/x-icon" href="icon/redis_fevicon.ico">
+<link rel="stylesheet" href="lib/bootstrap-3.3.7.min.css" type="text/css">
+<link rel="stylesheet" href="lib/fonts.googleapis.css" type="text/css">
+<link rel="stylesheet" href="css/rwm.css" type="text/css">
+<script src="lib/jquery.min.js" type="text/javascript"></script>
+<script src="lib/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/rwm.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="container" style="margin-top:5px;">
+	<div class="row">
+
+		<!---Title Header-->
+		<div class="header">
+			<img src="\img\redis.png" class="logoIconClass"/>
+			<a href="#" class="logoClass">Redis Web Manager</a>
+			<div class="header-right">
+				<a href="http://dhavalpadaya.tk/" target="_blank">Developed By : Dhaval Padaya</a>
+			</div>
+		</div>
+		<!-----Title Header-->
+
+	</div>
+
+		<!---Division to get host,port,password-->
+		<div class="row" id="notConnectedDiv">
+					<div class="form-group col-md-3">
+							<label for="host">Host:</label>
+							<input type="text" class="form-control" name="host" id="host" value="localhost" required>
+					</div>
+					<div class="form-group col-md-3">
+							<label for="port">Port:</label>
+							<input type="number" class="form-control" name="port" id="port"  value="6379" required>
+					</div>
+					<div class="form-group col-md-3">
+							<label for="auth">Auth:</label>
+							<input type="text" class="form-control" name="auth" id="auth">
+					</div>
+					<div class="form-group col-md-3">
+						<br/>
+						<button id="btnConnectId" onClick="fetchKeys(0)" class="btn btn-default">Connect</button></div>
+		</div>
+		<!---Division to get host,port,password-->
+
+		<!---Division to display after connection-->
+		<div class="row" id="connectedDiv">
+			<div class="col-md-9">
+				<p id="descTextBox" class="well well-sm" style="font-weight: bold;">Not Connect Right Now</p>
+			</div>
+			<div class="col-md-3">
+				<div class="row">
+						<div class="dropdown" style="text-align: center;margin: 2px;">
+								<button class="btn btn-primary dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">Select Database
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(0)">0</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(1)">1</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(2)">2</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(3)">3</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(4)">4</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(5)">5</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(6)">6</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(7)">7</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(8)">8</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(9)">9</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(10)">10</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(11)">11</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(12)">12</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(13)">13</button></li>
+									<li><button href="#" class="btnDbClass" onClick="fetchKeys(14)">14</button></li>
+								</ul>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!---Division to get host,port,password-->
+
+		<div class="row"  style="margin-top:2px;">
+					
+					<!--Division of right side-->
+					<div class="col-md-3">
+							<div class="row" style="min-height:100%">
+								<div id="externalButtonDivId">
+										<button id="addKeyButtonId" onclick="showAddKeyDialog()"  class="btn btn-success externalButtonsClass">Add Key</button>
+										<button id="reloadButtonId" onclick="fetchKeys()"  class="btn btn-success externalButtonsClass">Reload</button>
+								</div>
+								<div class="btnDivClass lowerDivFromButtons" id="allKeyDivId"></div>
+							</div>
+					</div>
+					<!--Division of right side-->
+
+					<!--Division of left side-->
+					<div class="col-md-9">
+						<div class="row" style="min-height:100%">
+
+							<!-- all buttons div-->
+							<div id="internalButtonDivId">
+								<button id="internalEditButtonId" onclick="showEditDialog()" class="btn btn-warning internalButtonsClass stringTypeKeyButtonClass">Edit</button>
+								<button id="addRowButtonId" onclick="showAddRowDialog()" class="btn btn-success internalButtonsClass notStringTypeKeyButtonClass">Add Row</button>
+								<button id="internalReloadButtonId" onclick="reloadInternalKey()" class="btn btn-success internalButtonsClass">Reload</button>
+								<button id="internalDeleteSelectedButtonId" onclick="showIsDeleteMultipleDialog()" class="btn btn-danger internalButtonsClass notStringTypeKeyButtonClass" disabled="true">Delete Selected Rows</button>
+								<button id="internalDeleteButtonId" onclick="showIsDeleteDialog()" class="btn btn-danger internalButtonsClass stringTypeKeyButtonClass">Delete</button>
+							</div>
+							<!-- all buttons div-->
+
+							<!--div to display string type value-->
+							<pre id="singleValueDisplayDivId" class="valueDisplayDivClass lowerDivFromButtons"></pre>
+							<!--div to display string type value-->
+
+							<!--div divided in two parts to display all other value types-->
+							<div id="keyValueDisplayDivId">
+								<div id="valueTableDivId" class="valueDisplayDivClass"></div>
+								<pre id="valueTextDivId"  class="valueDisplayDivClass"></pre>
+							</div>
+							<!--div divided in two parts to display all other value types-->
+
+						</div>
+					</div>
+					<!--Division of left side-->
+		</div>
+	</div>
+
+<!-- Modal to display any information or error dialog -->
+<div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="errorDialogHeader">Error</h4>
+        </div>
+        <div class="modal-body">
+          <p id="errorDialogText">Cannot load key!!!It may be not available in database.Please reload keys tree and try again.</p>
+        </div>
+        <div class="modal-footer">
+		  <button type="button" id="btnErrorDialogOK" class="btn btn-default" data-dismiss="modal">Ok</button>
+          <button type="button" id="btnErrorDialogClose" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Modal to display any information or error dialog -->
+
+<!-- add_key Modal -->
+<div id="addKeyModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Key</h4>
+					</div>
+					<div class="modal-body">
+							<div class="form-group">
+										<label for="key">Key:<sup style="color:red;">*</sup></label>
+										<input type="text" class="form-control" name="key" maxlength="50" placeholder="Maximum 50 characters" id="add_key_txtboxkey" required>
+										<div id="add_key_txtboxkey_error" class="errTextbox"></div>
+							</div>
+							<div class="form-group">
+									<label for="add_key_keyTypeDropdown">Type:</label>
+									<select class="form-control" id="add_key_keyTypeDropdown">
+										<option value="string">string</option>
+										<option value="hash">hash</option>
+										<option value="list">list</option>
+										<option value="set">set</option>
+										<option value="zset">zset</option>
+									</select>
+								</div>
+								<div id="addKeySingleValue">
+										<div class="form-group">
+												<label for="value">Value:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="value" id="add_key_singleValue"></textarea>
+												<div id="error_add_key_singleValue" class="errTextbox"></div>
+										</div>
+								</div>
+								<div id="addKeyDoubleValue" style="display:none;">
+										<div class="form-group" id="internalKeyDiv">
+												<label for="internalKey">Internal Key:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="internalKey" id="add_key_doubleValue_internalKey"></textarea>
+												<div id="error_add_key_doubleValue_internalKey" class="errTextbox"></div>
+										</div>
+										<div class="form-group" id="internalScoreDiv">
+												<label for="internalScore">Internal Score:<sup style="color:red;">*</sup></label>
+												<input type="number" class="form-control" name="internalScore" min="-9007199254740992" max="9007199254740992" id="add_key_doubleValue_internalScore">
+												<div id="error_add_key_doubleValue_internalScore" class="errTextbox"></div>
+										</div>
+										<div class="form-group">
+												<label for="internalValue">Value:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="internalValue" id="add_key_doubleValue_internalValue"></textarea>
+												<div id="error_add_key_doubleValue_internalValue" class="errTextbox"></div>
+										</div>
+								</div>
+					</div>
+					<div class="modal-footer">
+							<button type="button" id="btnAddKeyModal" class="btn btn-warning">Add</button>
+							<button type="button" id="btnCloseAddKeyModal" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+</div>
+<!-- add_key Modal -->
+
+<!-- add_row Modal -->
+<div id="addRowModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Row</h4>
+					</div>
+					<div class="modal-body">
+								<div id="addRowSingleValue">
+										<div class="form-group">
+												<label for="value">Value:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="value" id="add_Row_singleValue"></textarea>
+												<div id="error_add_Row_singleValue"  class="errTextbox"></div>
+										</div>
+								</div>
+								<div id="addRowDoubleValue" style="display:none;">
+										<div class="form-group" id="internalKeyDivForRow">
+												<label for="internalKeyForRow">Internal Key:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="internalKeyForRow" id="add_Row_doubleValue_internalKey"></textarea>
+												<div id="error_add_Row_doubleValue_internalKey"  class="errTextbox"></div>
+										</div>
+										<div class="form-group" id="internalScoreDivForRow">
+												<label for="internalScoreForRow">Internal Score:<sup style="color:red;">*</sup></label>
+												<input type="number" class="form-control" name="internalScoreForRow" min="-9007199254740992" max="9007199254740992" id="add_Row_doubleValue_internalScore">
+												<div id="error_add_Row_doubleValue_internalScore"  class="errTextbox"></div>
+										</div>
+										<div class="form-group">
+												<label for="internalValueForRow">Value:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="internalValueForRow" id="add_Row_doubleValue_internalValue"></textarea>
+												<div id="error_add_Row_doubleValue_internalValue"  class="errTextbox"></div>
+										</div>
+								</div>
+					</div>
+					<div class="modal-footer">
+							<button type="button" id="btnAddRowModal" class="btn btn-warning">Add</button>
+							<button type="button" id="btnCloseAddRowModel" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+</div>
+<!-- add_key Modal -->
+
+<!--rename_key modal-->
+<div id="renameKeyModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Rename Key</h4>
+				</div>
+				<div class="modal-body">
+							<div id="renameKeyNewKey">
+									<div class="form-group">
+											<label for="key">Key:<sup style="color:red;">*</sup></label>
+											<textarea class="form-control" name="key" id="rename_Key_newKey"></textarea>
+											<div id="error_rename_Key_newKey"  class="errTextbox"></div>
+									</div>
+							</div>
+				</div>
+				<div class="modal-footer">
+						<button type="button" id="btnRenameKeyModal" class="btn btn-warning">Rename</button>
+						<button type="button" id="btnCloseRenameKeyModel" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+</div>
+<!--rename_key modal-->
+
+<!-- edit_string_type_key Modal -->
+<div id="editStringTypeModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Edit</h4>
+					</div>
+					<div class="modal-body">
+								<div id="editStringTypeSingleValue">
+										<div class="form-group">
+												<label for="value">Value:<sup style="color:red;">*</sup></label>
+												<textarea class="form-control" name="value" id="edit_stringType_singleValue"></textarea>
+												<div id="error_edit_stringType_singleValue"  class="errTextbox"></div>
+										</div>
+								</div>
+					</div>
+					<div class="modal-footer">
+							<button type="button" id="btnEditStringTypeModal" class="btn btn-warning">Update</button>
+							<button type="button" id="btnCloseEditStringTypeModel" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+</div>
+<!-- edit_string_type_key Modal -->
+
+</body>
+</html>

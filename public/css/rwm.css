@@ -1,0 +1,197 @@
+/************CSS for RWM Header*************/
+
+.header {
+    overflow: hidden;
+    background-color: white;
+    padding: 20px 10px;
+  }
+  
+  .logoIconClass {
+      float: left;
+      width : 50px;
+      height : 50px;
+  }
+  /* Style the header links */
+  .header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 12px;
+    font-size: 18px; 
+    line-height: 25px;
+    border-radius: 4px;
+  }
+  a.logoClass {
+      text-decoration: none;
+  }
+  
+  /* Style the logoClass link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+  .header a.logoClass {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  /* Change the background color on mouse-over */
+  .header a:hover {
+    color: black;
+  }
+  
+  /* Style the active/current link*/
+  .header a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  /* Float the link section to the right */
+  .header-right {
+    float: right;
+  }
+  
+  /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */ 
+  @media screen and (max-width: 500px) {
+    .header a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+    .header-right {
+      float: none;
+    }
+  }
+  
+  /**********CSS for RWM Header*************/
+  
+  /**CSS for buttons**/
+  .btnDbClass{
+  background-color: white;
+    color: black;
+    border:none;
+    width:100%;
+    text-align:center;
+  }
+  .btn_key {
+    background-color: white;
+    color: black;
+    border:none;
+    width:50%;
+    text-align:left;
+  }
+  .btn_in_keyName {
+    background-color: white;
+    float: right;
+    border:none;
+    width:15%;
+    text-align:right;
+  }
+  .btn_in_table {
+    background-color: transparent;
+    /* float: left; */
+    border:none;
+    width:3px;
+    text-align:center;
+  }
+  .small_icon{
+      width:20px;
+      height:20px;
+  }
+  .btnDivClass {
+      background-color: white;
+    width:100%;
+    margin-bottom:2px;
+      overflow:auto;
+  }
+  
+  #internalButtonDivId,#externalButtonDivId{
+      border : 1px solid black;
+      height:40px;
+      overflow:auto;
+      text-align: right;
+  }
+  
+  .internalButtonsClass,.externalButtonsClass{
+      margin: 2px;
+      display: none
+  }
+  
+  /**********CSS for buttons******************/
+  
+  /**********CSS for value's table*************/
+  
+  .internalTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .internalTable td, .internalTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .internalTable tr:hover {background-color: #ddd;}
+  
+  .selectedRow{background-color: #ddd;}
+  
+  .internalTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .editColInteralTable{
+      width: 15px;
+  }
+  .firstColInteralTable{
+      width: 5px;
+  }
+  .secondColInternalTable{
+      width: 90px;
+  }
+  
+  /**********CSS for value's table*************/
+  
+  .preTag{
+  height:100%;
+  }
+  
+  #allKeyDivId{
+      border : 1px solid black;
+  }
+  
+  #connectedDiv{
+      display:none;
+      width:100%;
+      margin-top:5px;
+  }
+  
+  #notConnectedDiv{
+      margin-top:2px;
+  }
+  
+  .valueDisplayDivClass{
+      border : 1px solid black;
+      overflow:auto;
+  }
+  
+  .lowerDivFromButtons{
+      height:660px;
+  }
+  
+  #keyValueDisplayDivId{
+      display:none;
+  }
+  
+  #valueTableDivId{
+      height:360px;
+  }
+  
+  #valueTextDivId{
+      height:300px;
+  }
+  
+  .errTextbox{
+      color:red;
+      font-weight: bolder;
+  }

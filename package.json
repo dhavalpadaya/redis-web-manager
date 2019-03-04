@@ -1,0 +1,30 @@
+{
+  "name": "redis_web_manager",
+  "version": "1.0.0",
+  "description": "Redis client to create, update, delete redis keys and values",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "pkg": {
+	"assets": [
+      "public/**/*"
+    ]
+  },
+  "keywords": [
+    "Redis",
+	"nodejs",
+	""
+  ],
+  "homepage": "",
+  "author": "Dhaval Padaya",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "ioredis": "^4.3.0",
+    "redis": "^2.8.0"
+  }
+}
